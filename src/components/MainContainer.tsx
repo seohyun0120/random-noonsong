@@ -1,16 +1,23 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { stringToColor } from '../utils'
+import Result from './ResultContainer'
 
 interface IMainState {
-  inputText: string,
-  isConvertAvailable: boolean;
+  inputText: string
+  isConvertAvailable: boolean
+  selectedNickName: string
+  isPersonalReady: boolean
+  convertedColor: string
 }
 
 export default class Main extends React.Component<{}, IMainState> {
   state: IMainState = {
     inputText: '',
+    selectedNickName: '',
     isConvertAvailable: false,
+    isPersonalReady: false,
+    convertedColor: '#000000',
   }
 
   render() {
@@ -32,7 +39,11 @@ export default class Main extends React.Component<{}, IMainState> {
         </InputContainer>
         <Space />
         <PictureContainer>
-
+          <Result
+            personalNickName={this.state.selectedNickName}
+            personalColor={this.state.convertedColor}
+            isPersonalReady={this.state.isPersonalReady}
+          />
         </PictureContainer>
       </MainContainer>
     )
@@ -48,15 +59,17 @@ export default class Main extends React.Component<{}, IMainState> {
       this.setState({
         inputText: '',
         isConvertAvailable: false,
+        isPersonalReady: false,
       })
     }
   }
 
   onClickConvertButton = () => {
-    console.log(this.state.inputText)
-    console.log(stringToColor(this.state.inputText))
-    console.log(this.state.isConvertAvailable)
-    stringToColor(this.state.inputText)
+    this.setState({
+      convertedColor: stringToColor(this.state.inputText),
+      selectedNickName: this.state.inputText,
+      isPersonalReady: this.state.isConvertAvailable
+    })
   }
 }
 
@@ -74,6 +87,11 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+const PictureContainer = styled.div`
+  display: flex;
+  height: 100%;
 `
 
 const InputBox = styled.input`
@@ -109,7 +127,4 @@ const Button = styled.button<IColorProps>`
   ${(props) => props.isConvertAvailable && css`
     background-color: #3b5bdb;
   `}
-`
-
-const PictureContainer = styled.div`
 `
