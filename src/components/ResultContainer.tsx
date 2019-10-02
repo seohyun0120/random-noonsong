@@ -16,16 +16,14 @@ export default class ButtonBox extends React.Component<IResultProps> {
     return (
       <>
         {this.props.isPersonalReady ?
-          <>
-            <Description>
-              '{this.props.personalNickName}' 눈송이만의 색상은
-              <Label
-                personalColor={this.props.personalColor}
-              > 
-                {this.props.personalColor} 
-              </Label>
-            </Description>
-          </>
+          <Description>
+            '{this.props.personalNickName}' 눈송이만의 색상은
+            <Label
+              personalColor={this.props.personalColor}
+            > 
+              {this.props.personalColor} 
+            </Label>
+          </Description>
           :
           <Description>자신만의 닉네임을 입력한 후 '변환' 버튼을 클릭해보세요.</Description>
         }

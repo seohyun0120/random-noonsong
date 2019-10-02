@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Top from './components/TopContainer'
 import Main from './components/MainContainer'
+import Bottom from './components/BottomContainer'
 
 export default () => (
   <Fragment>
@@ -26,6 +27,7 @@ class App extends React.Component<{}, IAppState> {
       <Container>
         <Top />
         <Main />
+        <Bottom />
       </Container>
     )
   }
