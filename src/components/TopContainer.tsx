@@ -8,6 +8,7 @@ export default class Intro extends React.Component {
         <Title> Random noonsong </Title>
         <Description>나만의 눈송이를 만들어보세요.</Description>
         <Description>닉네임은 최대 10글자까지 입력할 수 있어요.</Description>
+        <Description>이모티콘도 하나 골라보세요.</Description>
       </IntroBox>
     )
   }
