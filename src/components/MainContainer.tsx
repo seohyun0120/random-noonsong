@@ -44,10 +44,10 @@ const customizedEmojiData = [
     id: 'dog',
     colons: ':dog:',
   }
-  // {
-  //   id: 'mushroom',
-  //   colons: ':mushroom:',
-  // }
+  {
+    id: 'mushroom',
+    colons: ':mushroom:',
+  }
 ]
 
 export default class Main extends React.Component<{}, IMainState> {
@@ -92,8 +92,7 @@ export default class Main extends React.Component<{}, IMainState> {
         </InputContainer>
         <EmojiContainer>
           {customizedEmojiData.map((key) => (
-            <EmojiBox
-            >
+            <EmojiBox>
               <Emoji
                 onClick={this.addEmoji}
                 key={key.id}
@@ -169,6 +168,7 @@ const EmojiContainer = styled.div`
   height: 2rem;
   margin-bottom: .5rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 `
@@ -194,18 +194,17 @@ const InputBox = styled.input`
 `
 
 const EmojiBox = styled.button`
-  width: 100%;
-  height: 1rem;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
+  background-color: rgba(0, 0, 0, .05);
   border: 0;
   border-radius: .125rem;
+  cursor: pointer;
+  display: flex;
+  height: 1rem;
+  justify-content: center;
   font-size: .7rem;
   flex: auto;
   margin-right: 0.25em;
   outline: none;
-  background-color: rgba(0, 0, 0, .05);
 `
 
 const SelectedEmoji = styled.div`

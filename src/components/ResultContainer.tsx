@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import myImg from '../assets/default_noonsong.png'
+import domtoimage from 'dom-to-image'
 import Picture from './PictureContainer'
 import { EmojiData } from 'emoji-mart';
 
@@ -29,10 +29,17 @@ export default class ButtonBox extends React.Component<IResultProps> {
                 {this.props.personalColor}
               </Label>
             </Description>
-            <Picture
-              personalColor={this.props.personalColor}
-              personalEmoji={this.props.personalEmoji}
-            />
+            <PictureContainer id='random-noonsong'>
+              <Picture
+                personalColor={this.props.personalColor}
+                personalEmoji={this.props.personalEmoji}
+              />
+            </PictureContainer>
+            <DownloadButton
+              onClick={() => this.downloadImage('random-noonsong')}
+            >
+              다운로드
+            </DownloadButton>
           </ResultContainer>
           :
           <>
@@ -41,6 +48,35 @@ export default class ButtonBox extends React.Component<IResultProps> {
         }
       </>
     )
+  }
+
+  downloadImage = (idName: string) => {
+    const scale = 2
+    domtoimage
+      .toPng(document.getElementById(idName), {
+        height: 320 * scale,
+        width: 320 * scale,
+        style: {
+          transform: "scale(" + scale + ")",
+          transformOrigin: "top left",
+          width: 320 + "px",
+          height: 320 + "px"
+        }
+      })
+      .then((dataUrl: string) => {
+        const link = document.createElement('a')
+        link.download = 'myNoonSong.png'
+        link.href = dataUrl
+        link.click()
+      })
+
+    // domtoimage.toPng(document.getElementById(idName))
+    //   .then((dataUrl: string) => {
+    //     const link = document.createElement('a')
+    //     link.download = 'myNoonSong.png'
+    //     link.href = dataUrl
+    //     link.click()
+    //   })
   }
 }
 
@@ -62,6 +98,21 @@ interface IColorProps {
 const PictureContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`
+
+const DownloadButton = styled.button`
+  appearance: none;
+  background-color: #3b5bdb;
+  color: #fff;
+  cursor: pointer;
+  border-radius: .125rem;
+  border: 0px;
+  font-size: .6rem;
+  width: 4rem;
+  height: 1.25rem;
+  outline: none;
 `
 
 const Label = styled.div<IColorProps>`
