@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
 import styled, { createGlobalStyle } from 'styled-components'
-import Top from './components/TopContainer'
-import Main from './components/MainContainer'
-import Bottom from './components/BottomContainer'
-import Practice from './components/Practice'
+import SideMenu from './components/Sidebar'
+import RandomNoonsong from './components/RandomNoonsong'
+import About from './components/About'
+import TopContainer from './components/Top/TopContainer'
 
 export default () => (
-  <Fragment>
-    <App />
-    <GlobalStyle />
-  </Fragment>
+  <BrowserRouter>
+    <Fragment>
+      <App />
+      <GlobalStyle />
+    </Fragment>
+  </BrowserRouter>
 )
 
 interface IAppState {
@@ -26,9 +29,9 @@ class App extends React.Component<{}, IAppState> {
   render() {
     return (
       <Container>
-        <Top />
-        <Main />
-        <Bottom />
+        <TopContainer />
+        <Route exact path='/' component={RandomNoonsong} />
+        <Route exact path='/info' component={About} />
       </Container>
     )
   }
@@ -44,8 +47,8 @@ const GlobalStyle = createGlobalStyle`
     display: block;
     font-size: 30px;
     user-select: none;
-    max-width: 39rem;
-    padding: 2.625rem 1.21875rem;
+    /* max-width: 39rem; */
+    padding: 0rem 1.21875rem;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -55,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const Container = styled.div`
-  display: flex;
+  display: block;
   flex-direction: column;
   height: 100%;
 `
