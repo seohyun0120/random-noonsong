@@ -1,9 +1,9 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { stringToColor } from '../utils'
-import Result from './ResultContainer'
-import { Emoji, EmojiData } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
+import React from 'react'
+import Result from './RandomNoonsongResult'
+import styled, { css } from 'styled-components'
+import { stringToColor } from '../../utils'
+import { Emoji, EmojiData } from 'emoji-mart'
 
 interface IMainState {
   inputText: string
@@ -82,13 +82,13 @@ export default class Main extends React.Component<{}, IMainState> {
               </>
               : null}
           </SelectedEmoji>
-          <Button
+          <ConvertButton
             disabled={!this.state.isTextAdded && !this.state.isEmojiSelected}
             onClick={this.onClickConvertButton}
             isConvertAvailable={this.state.isTextAdded && this.state.isEmojiSelected}
           >
             변환
-          </Button>
+          </ConvertButton>
         </InputContainer>
         <EmojiContainer>
           {customizedEmojiData.map((key) => (
@@ -222,7 +222,7 @@ interface IColorProps {
   isConvertAvailable: boolean
 }
 
-const Button = styled.button<IColorProps>`
+const ConvertButton = styled.button<IColorProps>`
   appearance: none;
   background-color: #868e96;
   color: #fff;

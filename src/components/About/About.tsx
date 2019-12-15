@@ -1,25 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default class Bottom extends React.Component {
+export default class About extends React.Component {
   render() {
     return (
-      <BottomBox>
+      <Container>
         <Description> 👩🏻‍💻 </Description>
         <LinkDescription
           href='https://github.com/seohyun0120/random-noonsong'
         >
           Github
         </LinkDescription>
-      </BottomBox>
+      </Container>
     )
   }
 }
 
-const BottomBox = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: row;
-  height: 2px;
+  height: 5rem;
   margin-top: auto;
 `
 

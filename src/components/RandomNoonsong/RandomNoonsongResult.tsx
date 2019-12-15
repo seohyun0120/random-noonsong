@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import domtoimage from 'dom-to-image'
-import Picture from './PictureContainer'
+import Picture from './RandomNoonsongPicture'
 import { EmojiData } from 'emoji-mart'
 
 interface IResultProps {

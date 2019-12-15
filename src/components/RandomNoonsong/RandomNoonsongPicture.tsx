@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import myImg from '../assets/noonsong.png'
-import { EmojiData, Emoji } from 'emoji-mart';
+import myImg from '../../assets/noonsong.png'
+import { EmojiData, Emoji } from 'emoji-mart'
 
 interface IPictureProps {
   personalColor: string
