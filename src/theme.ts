@@ -1,10 +1,11 @@
 import baseStyled, { ThemedStyledInterface } from 'styled-components'
 
 export const theme = {
-  primaryHover: '#ffa8a8',
   primaryWhite: '#FFFFFF',
   primaryBlack: '#000000',
-  primaryBlue: '#a5d8ff',
+  primaryBlue: '#74c0fc',
+  primaryOrange: '#fd7e14',
+  primaryGray: '#343a40',
   mobile: '576px'
 }
 
