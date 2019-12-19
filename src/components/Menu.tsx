@@ -62,6 +62,6 @@ const MenuText = styled.div`
   text-decoration: none;
   transition: color 0.3s linear;
   &:hover {
-    color: ${({ theme }) => theme.primaryBlue};
+    color: ${({ theme }) => theme.primaryOrange};
   }
 `

@@ -11,7 +11,6 @@ export default function Burger(props: IBurgerProps) {
 
   return (
     <StyledBurger
-      aria-label='Toggle menu'
       aria-expanded={isExpanded}
       open={props.open}
       onClick={() => props.setOpen(!props.open)}

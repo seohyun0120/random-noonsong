@@ -26,12 +26,12 @@ function App() {
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyles />
+        <Route exact path='/' component={RandomNoonsong} />
+        <Route exact path='/about' component={About} />
         <div ref={node}>
           <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </div>
-        <Route exact path='/' component={RandomNoonsong} />
-        <Route exact path='/info' component={About} />
       </>
     </ThemeProvider>
   )
