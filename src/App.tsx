@@ -1,64 +1,38 @@
-import React, { Fragment } from 'react'
+import React, { useRef, useState } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
-import styled, { createGlobalStyle } from 'styled-components'
-import SideMenu from './components/Sidebar'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyles } from './global'
+import { theme } from './theme'
+import { useOnClickOutside } from './hook'
 import RandomNoonsong from './components/RandomNoonsong'
 import About from './components/About'
-import TopContainer from './components/Top/TopContainer'
+import Burger from './components/Burger'
+import Menu from './components/Menu'
 
 export default () => (
   <BrowserRouter>
-    <Fragment>
-      <App />
-      <GlobalStyle />
-    </Fragment>
+    <App />
   </BrowserRouter>
 )
 
-interface IAppState {
-  inputText: string,
-  isConvertAvailable: boolean;
-}
+function App() {
+  const [open, setOpen] = useState(false)
+  const node = useRef<HTMLHeadingElement>(null)
+  const menuId = 'main-menu'
 
-class App extends React.Component<{}, IAppState> {
-  state: IAppState = {
-    inputText: '',
-    isConvertAvailable: false,
-  }
+  useOnClickOutside(node, () => setOpen(false))
 
-  render() {
-    return (
-      <Container>
-        <TopContainer />
+  return (
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyles />
+        <div ref={node}>
+          <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+          <Menu open={open} setOpen={setOpen} id={menuId} />
+        </div>
         <Route exact path='/' component={RandomNoonsong} />
         <Route exact path='/info' component={About} />
-      </Container>
-    )
-  }
+      </>
+    </ThemeProvider>
+  )
 }
-
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  }
-
-  html {
-    display: block;
-    font-size: 30px;
-    user-select: none;
-    /* max-width: 39rem; */
-    padding: 0rem 1.21875rem;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    outline: none;
-    height: 100%;
-  }
-`
-
-const Container = styled.div`
-  display: block;
-  flex-direction: column;
-  height: 100%;
-`
