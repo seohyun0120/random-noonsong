@@ -28,8 +28,8 @@ interface IButtonProps {
 
 const StyledBurger = styled.button<IButtonProps>`
   position: absolute;
-  top: 5%;
-  left: 2.5rem;
+  top: 1%;
+  left: .5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -44,7 +44,7 @@ const StyledBurger = styled.button<IButtonProps>`
   span {
     width: 2rem;
     height: 0.25rem;
-    background: ${({ theme, open }) => open ? theme.primaryWhite : theme.primaryBlack};
+    background: ${({ theme }) => theme.primaryWhite};
     border-radius: 10px;
     transition: all 0.3s linear;
     position: relative;
