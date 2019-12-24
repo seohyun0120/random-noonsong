@@ -1,239 +1,180 @@
 import 'emoji-mart/css/emoji-mart.css'
-import React from 'react'
+import React, { useState } from 'react'
 import Result from './RandomNoonsongResult'
 import styled, { css } from 'styled-components'
-import { stringToColor } from '../../utils'
-import { Emoji, EmojiData } from 'emoji-mart'
+import { stringToColor, customizedEmojiData } from '../../utils'
+import { Emoji, BaseEmoji } from 'emoji-mart'
 
-interface IMainState {
-  inputText: string
-  inputEmoji: EmojiData[]
-  isTextAdded: boolean
-  isEmojiSelected: boolean
-  isPersonalReady: boolean
-  selectedNickName: string
-  convertedColor: string
-}
+const Main = () => {
+  const [inputValue, setNameValue] = useState('')
+  const [inputEmoji, setEmojiValue] = useState([] as BaseEmoji[])
+  const [convertedColor, setConvertedColor] = useState('000000')
+  const [isPersonalReady, setIsPersonalReady] = useState(false)
 
-const customizedEmojiData = [
-  {
-    id: 'santa',
-    colons: ':santa::skin-tone-3:',
-  },
-  {
-    id: 'developer',
-    colons: ':female-technologist:'
-  },
-  {
-    id: 'blue_heart',
-    colons: ':blue_heart:'
-  },
-  {
-    id: 'heart',
-    colons: ':heart:'
-  },
-  {
-    id: 'heart_eyes',
-    colons: ':heart_eyes:'
-  },
-  {
-    id: 'poop',
-    colons: ':poop:'
-  },
-  {
-    id: 'dog',
-    colons: ':dog:',
-  },
-  {
-    id: 'mushroom',
-    colons: ':mushroom:',
-  }
-]
-
-export default class Main extends React.Component<{}, IMainState> {
-  state: IMainState = {
-    inputText: '',
-    selectedNickName: '',
-    inputEmoji: [],
-    isTextAdded: false,
-    isEmojiSelected: false,
-    isPersonalReady: false,
-    convertedColor: '#000000',
+  const onClickConvertButton = () => {
+    setConvertedColor(stringToColor(inputValue))
+    setNameValue(inputValue)
+    setEmojiValue(inputEmoji)
+    setIsPersonalReady(inputValue != '' && inputEmoji.length > 0)
   }
 
-  render() {
-    return (
-      <MainContainer>
-        <InputContainer>
-          <InputBox
-            type='string'
-            maxLength={10}
-            onChange={this.onTextInput}
-          />
-          <SelectedEmoji>
-            {this.state.inputEmoji.length > 0 ?
-              <>
-                <Emoji
-                  emoji={this.state.inputEmoji[0]}
-                  set='apple'
-                  size={28}
-                  sheetSize={64}
-                />
-              </>
-              : null}
-          </SelectedEmoji>
-          <ConvertButton
-            disabled={!this.state.isTextAdded && !this.state.isEmojiSelected}
-            onClick={this.onClickConvertButton}
-            isConvertAvailable={this.state.isTextAdded && this.state.isEmojiSelected}
-          >
-            변환
-          </ConvertButton>
-        </InputContainer>
-        <EmojiContainer>
-          {customizedEmojiData.map((key) => (
-            <EmojiBox>
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length != 0) {
+      setNameValue(event.target.value)
+    } else {
+      setNameValue('')
+    }
+  }
+
+  const onClickEmoji = (emoji: any) => {
+    setEmojiValue([emoji])
+  }
+
+  return (
+    <Container>
+      <InputContainer>
+        <InputBox
+          type='string'
+          maxLength={10}
+          onChange={(e) => onChangeInput(e)}
+        />
+        <SelectedEmoji>
+          {inputEmoji.length > 0 ?
+            <>
               <Emoji
-                onClick={this.addEmoji}
-                key={key.id}
-                emoji={key.colons}
+                emoji={inputEmoji[0]}
                 set='apple'
                 size={28}
                 sheetSize={64}
               />
-            </EmojiBox>
-          ))}
-        </EmojiContainer>
-        <Space />
-        <OutputContainer>
-          <Result
-            personalNickName={this.state.selectedNickName}
-            personalColor={this.state.convertedColor}
-            personalEmoji={this.state.inputEmoji}
-            isPersonalReady={this.state.isPersonalReady}
-          />
-        </OutputContainer>
-      </MainContainer>
-    )
-  }
-
-  onTextInput = (event: any) => {
-    if (event.target.value.length != 0) {
-      this.setState({
-        inputText: event.target.value,
-        isTextAdded: true,
-      })
-    } else {
-      this.setState({
-        inputText: '',
-      })
-    }
-  }
-
-  onClickConvertButton = () => {
-    this.setState({
-      convertedColor: stringToColor(this.state.inputText),
-      selectedNickName: this.state.inputText,
-      isPersonalReady: this.state.isTextAdded && this.state.isEmojiSelected
-    })
-  }
-
-  addEmoji = (emoji: any) => {
-    console.log(emoji)
-    this.setState(() => ({
-      inputEmoji: [emoji],
-      isEmojiSelected: true,
-    }))
-  }
+            </>
+            : null}
+        </SelectedEmoji>
+        <ConvertButton
+          disabled={inputValue == '' || inputEmoji.length == 0}
+          onClick={onClickConvertButton}
+          isConvertAvailable={inputValue != '' && inputEmoji.length > 0}
+        >
+          변환
+        </ConvertButton>
+      </InputContainer>
+      <EmojiContainer>
+        {customizedEmojiData.map((key) => (
+          <EmojiBox>
+            <Emoji
+              onClick={(e) => onClickEmoji(e)}
+              key={key.id}
+              emoji={key.colons}
+              set='apple'
+              size={28}
+              sheetSize={64}
+            />
+          </EmojiBox>
+        ))}
+      </EmojiContainer>
+      <OutputContainer>
+        <Result
+          personalNickName={inputValue}
+          personalColor={convertedColor}
+          personalEmoji={inputEmoji}
+          isPersonalReady={isPersonalReady}
+        />
+      </OutputContainer>
+    </Container>
+  )
 }
 
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const Space = styled.div`
-  flex: 1;
+const Container = styled.div`
+  display: inline-block;
+  max-width: 1020px;
+  padding: 1rem 2rem;
+  text-align: left;
+  width: 100%;
 `
 
 const InputContainer = styled.div`
-  height: 2rem;
-  margin: .5rem 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const EmojiContainer = styled.div`
-  height: 2rem;
-  margin-bottom: .5rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-`
-
-const OutputContainer = styled.div`
-  display: flex;
-  height: 100%;
+  justify-content: space-between;
+  padding: 1rem 0;
 `
 
 const InputBox = styled.input`
   width: 100%;
-  height: 1.25rem;
-  display: flex;
+  height: 2.5rem;
+  margin-right: 0.25em;
   text-align: center;
   border: 0;
-  border-radius: .125rem;
-  font-size: .7rem;
-  flex: auto;
-  margin-right: 0.25em;
+  border-radius: .25rem;
   outline: none;
+  font-size: 1.225rem;
   background-color: rgba(0, 0, 0, .1);
-  color: #000;
-`
+  color: ${({ theme }) => theme.primaryBlack};
 
-const EmojiBox = styled.button`
-  background-color: rgba(0, 0, 0, .05);
-  border: 0;
-  border-radius: .125rem;
-  cursor: pointer;
-  display: flex;
-  height: 1rem;
-  justify-content: center;
-  font-size: .7rem;
-  flex: auto;
-  margin-right: 0.25em;
-  outline: none;
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    font-size: 15px;
+  }
 `
 
 const SelectedEmoji = styled.div`
-  width: 3rem;
-  height: 1.25rem;
-  padding: .125rem;
-  margin-right: 0.25em;
-  border-radius: .125rem;
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+  border-radius: .25rem;
   background-color: rgba(0, 0, 0, .1);
-  display: flex;
-  justify-content: center;
+  margin-right: 0.25em;
+  height: 2.5rem;
+  width: 5rem;
+  text-align: center;
+
+  span {
+    margin-top: .175rem;
+  }
 `
+
 interface IColorProps {
   isConvertAvailable: boolean
 }
 
 const ConvertButton = styled.button<IColorProps>`
   appearance: none;
-  background-color: #868e96;
-  color: #fff;
+  background-color: ${({ theme }) => theme.primaryGray};
+  color: ${({ theme }) => theme.primaryWhite};
   cursor: pointer;
-  border-radius: .125rem;
-  border: 0px;
-  font-size: .6rem;
-  width: 2.5rem;
-  height: 1.25rem;
+  border: 0;
+  border-radius: .25rem;
+  font-size: 1.125rem;
+  width: 5rem;
+  height: 2.5rem;
   outline: none;
   ${(props) => props.isConvertAvailable && css`
-    background-color: #3b5bdb;
+    background-color: ${({ theme }) => theme.primaryOrange};
   `}
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    font-size: 15px;
+    width: 4rem;
+  }
 `
+
+const EmojiContainer = styled.div`
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  overflow-y: scroll;
+`
+
+const EmojiBox = styled.div`
+  border: 0;
+  height: 2rem;
+
+  button {
+    cursor: pointer;
+    outline: none;
+  }
+`
+
+const OutputContainer = styled.div`
+  display: flex;
+  height: 100%;
+  padding: 1rem 0;
+`
+
+export default Main;

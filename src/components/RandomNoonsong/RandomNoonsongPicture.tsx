@@ -8,118 +8,122 @@ interface IPictureProps {
   personalEmoji: EmojiData[]
 }
 
-let noonsongData = [1, 0, 1, 0, 1, 0, 1, 0]
-let emojiData = [0, 2, 0, 2, 0, 2, 0, 2]
+const noonsongData = [1, 0, 1, 0, 1, 0, 1, 0]
+const emojiData = [0, 2, 0, 2, 0, 2, 0, 2]
 
-export default class PictureBox extends React.Component<IPictureProps> {
-  constructor(props: any) {
-    super(props)
-  }
+const PictureBox = (props: IPictureProps) => {
+  const noonsongImg = noonsongData.map((i) => {
+    if (i == 0) {
+      return <Blank />
+    } else {
+      return (
+        <OuterPicture
+          personalColor={props.personalColor}
+        >
+          <Picture
+            src={myImg}
+            title='my_random_noonsong'
+          />
+        </OuterPicture>
+      )
+    }
+  })
 
-  render() {
-    const noonsongImg = noonsongData.map((i) => {
-      if (i == 0) {
-        return <Blank />
-      } else {
-        return (
-          <OuterPicture
-            personalColor={this.props.personalColor}
-          >
-            <Picture
-              src={myImg}
-              title='my_random_noonsong'
-            />
-          </OuterPicture>
-        )
-      }
-    })
+  const emojiImg = emojiData.map((i) => {
+    if (i == 0) {
+      return <Blank />
+    } else {
+      return (
+        <EmojiBox>
+          <Emoji
+            native={true}
+            emoji={props.personalEmoji[0]}
+            set='apple'
+            size={38}
+            sheetSize={64}
+          />
+        </EmojiBox>
+      )
+    }
+  })
 
-    const emojiImg = emojiData.map((i) => {
-      if (i == 0) {
-        return <Blank />
-      } else {
-        return (
-          <EmojiBox>
-            <Emoji
-              native={true}
-              emoji={this.props.personalEmoji[0]}
-              set='apple'
-              size={32}
-              sheetSize={64}
-            />
-          </EmojiBox>
-        )
-      }
-    })
-
-    return (
-      <PictureContainer id='pictureContainer'>
-        <NoonsongContainer>
-          {noonsongImg}
-        </NoonsongContainer>
-        <EmojiContainer>
-          {emojiImg}
-        </EmojiContainer>
-        <NoonsongContainer>
-          {noonsongImg}
-        </NoonsongContainer>
-        <EmojiContainer>
-          {emojiImg}
-        </EmojiContainer>
-        <NoonsongContainer>
-          {noonsongImg}
-        </NoonsongContainer>
-        <EmojiContainer>
-          {emojiImg}
-        </EmojiContainer>
-        <NoonsongContainer>
-          {noonsongImg}
-        </NoonsongContainer>
-        <EmojiContainer>
-          {emojiImg}
-        </EmojiContainer>
-      </PictureContainer>
-    )
-  }
+  return (
+    <PictureContainer id='pictureContainer'>
+      <NoonsongContainer>
+        {noonsongImg}
+      </NoonsongContainer>
+      <EmojiContainer>
+        {emojiImg}
+      </EmojiContainer>
+      <NoonsongContainer>
+        {noonsongImg}
+      </NoonsongContainer>
+      <EmojiContainer>
+        {emojiImg}
+      </EmojiContainer>
+      <NoonsongContainer>
+        {noonsongImg}
+      </NoonsongContainer>
+      <EmojiContainer>
+        {emojiImg}
+      </EmojiContainer>
+      <NoonsongContainer>
+        {noonsongImg}
+      </NoonsongContainer>
+      <EmojiContainer>
+        {emojiImg}
+      </EmojiContainer>
+    </PictureContainer>
+  )
 }
-
 interface IColorProps {
   personalColor: string
 }
 
 const PictureContainer = styled.div`
-  background: #FFF;
+  background: ${({ theme }) => theme.primaryWhite};
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
 `
 
 const NoonsongContainer = styled.div`
-  background-color: #FFF;
   display: flex;
   flex-direction: row;
-  display: flex;
   align-items: center;
   justify-content: center;
 `
 
 const EmojiContainer = styled.div`
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    font-size: 38px;
+  }
 `
 
 const Blank = styled.div`
-  width: 42px;
-  height: 42px;
+  width: 55px;
+  height: 55px;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 38px;
+    height: 38px;
+  }
 `
 
 const EmojiBox = styled.div`
-  width: 42px;
-  height: 42px;
+  width: 55px;
+  height: 55px;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 38px;
+    height: 38px;
+    font-size: 38px;
+  }
 `
 
 const Picture = styled.img`
@@ -129,6 +133,13 @@ const Picture = styled.img`
 
 const OuterPicture = styled.div<IColorProps>`
   background: ${(props) => props.personalColor};
-  width: 42px;
-  height: 42px;
+  width: 55px;
+  height: 55px;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 38px;
+    height: 38px;
+  }
 `
+
+export default PictureBox;

@@ -11,49 +11,10 @@ interface IResultProps {
   isPersonalReady: boolean
 }
 
-export default class ButtonBox extends React.Component<IResultProps> {
-  constructor(props: any) {
-    super(props)
-  }
-
-  render() {
-    return (
-      <>
-        {this.props.isPersonalReady ?
-          <ResultContainer>
-            <Description>
-              '{this.props.personalNickName}'
-              <Label
-                personalColor={this.props.personalColor}
-              >
-                {this.props.personalColor}
-              </Label>
-            </Description>
-            <PictureContainer id='random-noonsong'>
-              <Picture
-                personalColor={this.props.personalColor}
-                personalEmoji={this.props.personalEmoji}
-              />
-            </PictureContainer>
-            <DownloadButton
-              onClick={() => this.downloadImage('random-noonsong')}
-            >
-              다운로드
-            </DownloadButton>
-          </ResultContainer>
-          :
-          <>
-            <Description>자신만의 닉네임을 입력하고 이모티콘을 골라보세요!</Description>
-          </>
-        }
-      </>
-    )
-  }
-
-  downloadImage = (idName: string) => {
+const ButtonBox = (props: IResultProps) => {
+  const downloadImage = (idName: string) => {
     const element = document.getElementById(idName) as HTMLInputElement
     const scale = 1500 / element.offsetWidth
-    console.log(scale, element.offsetWidth)
     domtoimage
       .toPng(element, {
         height: element.offsetHeight * scale,
@@ -72,42 +33,113 @@ export default class ButtonBox extends React.Component<IResultProps> {
         link.click()
       })
   }
+
+  return (
+    <>
+      {props.isPersonalReady ?
+        <ResultContainer>
+          <PictureContainer id='random-noonsong'>
+            <Picture
+              personalColor={props.personalColor}
+              personalEmoji={props.personalEmoji}
+            />
+          </PictureContainer>
+          <DetailContainer>
+            <Info personalColor={props.personalColor}>
+              <h2>{props.personalNickName}</h2> 님의 고유한 색깔은 <h3>{props.personalColor}</h3> 입니다.
+            </Info>
+            <DownloadButton
+              onClick={() => downloadImage('random-noonsong')}
+            >
+              다운로드
+            </DownloadButton>
+          </DetailContainer>
+        </ResultContainer>
+        :
+        <>
+          <Description>자신만의 닉네임을 입력하고 이모티콘을 골라보세요!</Description>
+        </>
+      }
+    </>
+  )
 }
 
 const ResultContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  max-width: 1020px;
+  text-align: left;
+  width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    display: inline-block;
+  }
 `
 
-const Description = styled.div`
-  font-size: 13px;
-  font-weight: 500;
-  display: flex;
+const PictureContainer = styled.div`
+  width: 100%;
+`
+
+const DetailContainer = styled.div`
+  display: inline-block;
+  text-align: left;
+  width: 100%;
 `
 
 interface IColorProps {
   personalColor: string
 }
 
-const PictureContainer = styled.div`
-  width: 100%;
+const Info = styled.div<IColorProps>`
+  font-size: 1.25rem;
+  font-weight: 400;
+
+  h2 {
+    display: inline;
+    font-size: 1.325rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    display: inline;
+    color: ${(props) => props.personalColor};
+  }
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    font-size: 13px;
+    padding: .5rem 0 0 0;
+
+    h2 {
+      font-size: 14px;
+    }
+  }
 `
 
 const DownloadButton = styled.button`
   appearance: none;
-  background-color: #3b5bdb;
-  color: #fff;
+  background-color: ${({ theme }) => theme.primaryGray};
+  color: ${({ theme }) => theme.primaryWhite};
   cursor: pointer;
-  border-radius: .125rem;
-  border: 0px;
-  font-size: .6rem;
-  width: 4rem;
-  height: 1.25rem;
+  border: 0;
+  border-radius: .25rem;
   outline: none;
+  width: 8rem;
+  height: 2rem;
+  font-size: 1.25rem;
+  margin: .5rem 0 0 0; 
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 4rem;
+    font-size: 13px;
+  }
 `
 
-const Label = styled.div<IColorProps>`
-  margin-left: .15rem;
-  color: ${(props) => props.personalColor};
+const Description = styled.div`
+  font-size: 1.225rem;
+  font-weight: 500;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    font-size: 13px;
+  }
 `
 
+export default ButtonBox;
