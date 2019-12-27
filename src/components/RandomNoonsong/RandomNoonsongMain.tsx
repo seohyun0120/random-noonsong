@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Result from './RandomNoonsongResult'
 import styled, { css } from 'styled-components'
 import { stringToColor, customizedEmojiData } from '../../utils'
-import { Emoji, BaseEmoji } from 'emoji-mart'
+import { Emoji, BaseEmoji, Picker } from 'emoji-mart'
 
 const Main = () => {
   const [inputValue, setNameValue] = useState('')
@@ -60,16 +60,20 @@ const Main = () => {
       </InputContainer>
       <EmojiContainer>
         {customizedEmojiData.map((key) => (
-          <EmojiBox>
+          <Picker
             <Emoji
               onClick={(e) => onClickEmoji(e)}
               key={key.id}
               emoji={key.colons}
-              set='apple'
-              size={28}
-              sheetSize={64}
-            />
-          </EmojiBox>
+            set='apple'
+            emojiSize={24}
+            perLine={27}
+            defaultSkin={1}
+            onSelect={(e) => onClickEmoji(e)}
+            showPreview={false}
+            showSkinTones={false}
+          />
+        }
         ))}
       </EmojiContainer>
       <OutputContainer>
