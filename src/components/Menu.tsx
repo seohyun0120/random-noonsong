@@ -19,11 +19,11 @@ export default function Menu(props: IMenuProps) {
       {...props}
     >
       <Link
-        to='/random-noonsong'
+        to='/'
         tabIndex={tabIndex}
         onClick={() => props.setOpen(!props.open)} style={{ textDecoration: 'none', outline: 0 }}
       >
-        <MenuText>랜덤눈송이</MenuText>
+        <MenuText>눈송 LAB</MenuText>
       </Link>
       <Link
         to='/about'
@@ -31,6 +31,13 @@ export default function Menu(props: IMenuProps) {
         onClick={() => props.setOpen(!props.open)} style={{ textDecoration: 'none', outline: 0 }}
       >
         <MenuText>About</MenuText>
+      </Link>
+      <Link
+        to='/random-noonsong'
+        tabIndex={tabIndex}
+        onClick={() => props.setOpen(!props.open)} style={{ textDecoration: 'none', outline: 0 }}
+      >
+        <MenuText>나만의 눈송이</MenuText>
       </Link>
     </StyledMenu >
   )
