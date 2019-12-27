@@ -8,6 +8,7 @@ import RandomNoonsong from './components/RandomNoonsong'
 import About from './components/About'
 import Burger from './components/Burger'
 import Menu from './components/Menu'
+import LandingPage from './components/LandingPage'
 
 export default () => (
   <BrowserRouter>
@@ -27,7 +28,8 @@ function App() {
       <>
         <GlobalStyles />
         <TopContainer />
-        <Route exact path='/' component={RandomNoonsong} />
+        <Route exact path='/' component={LandingPage} />
+        <Route exact path='/random-noonsong' component={RandomNoonsong} />
         <Route exact path='/about' component={About} />
         <div ref={node}>
           <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
@@ -39,7 +41,7 @@ function App() {
 }
 
 const TopContainer = styled.div`
-  background: ${({ theme }) => theme.primaryBlack};
+  background: ${({ theme }) => theme.nsLabBlack};
   top: 0%;
   height: 3rem;
 `

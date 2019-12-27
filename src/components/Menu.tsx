@@ -19,7 +19,7 @@ export default function Menu(props: IMenuProps) {
       {...props}
     >
       <Link
-        to='/'
+        to='/random-noonsong'
         tabIndex={tabIndex}
         onClick={() => props.setOpen(!props.open)} style={{ textDecoration: 'none', outline: 0 }}
       >
@@ -39,7 +39,7 @@ export default function Menu(props: IMenuProps) {
 export const StyledMenu = styled.div<IMenuProps>`
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.primaryBlack};
+  background: ${({ theme }) => theme.nsLabBlack};
   transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(-100%)'};
   width: 18rem;
   height: 100%;
@@ -58,7 +58,7 @@ const MenuText = styled.div`
   font-size: 2.25rem;
   padding: 1rem 0;
   font-weight: bold;
-  color: ${({ theme }) => theme.primaryWhite};
+  color: ${({ theme }) => theme.nsLabWhite};
   text-decoration: none;
   transition: color 0.3s linear;
   &:hover {
