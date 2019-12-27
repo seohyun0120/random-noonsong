@@ -6,12 +6,12 @@ export default function About() {
     <Container>
       <TextContainer>
         <Title>
-          Noonsong Factory 🤖
+          눈송 L A B 🤖
         </Title>
         <Description>made by <span>@scorpion</span></Description>
         <Description>
-          눈송팩토리(Noonsong Factory)는 숙명여자대학교 마스코트인 <span>눈송이</span>를 활용하여 만들어진 Web Application입니다. <br />
-          심심한 숙대생이 남는 시간에 직접 만들어보았습니다. <br />
+          눈송 LAB(Noonsong LAB)은 숙명여자대학교 마스코트인 <span>눈송이</span>를 활용하여 만들어진 Web Application입니다. <br />
+          심심한 숙대생이 남는 시간을 활용하여 직접 만들어보았습니다. <br />
           앞으로 계속 추가될 다양한 <span>눈송이</span>테마들을 기대해주세요!
         </Description>
       </TextContainer>
@@ -21,7 +21,7 @@ export default function About() {
         </SubTitle>
         <SubDescription>
           <h2>v1.0</h2>
-          <h3>December 25, 2019</h3>
+          <h3>December 27, 2019</h3>
           <h4> 🎉 랜덤눈송이(RandomNoonsong) 출시</h4>
         </SubDescription>
       </ReleaseInfoContainer>
@@ -32,7 +32,7 @@ export default function About() {
         <HelpDescription>
           <h2>개발하세요?</h2>
           <h3>
-            <span>NoonsongFactory</span>에 관한 <span>PR & Issue</span>는 언제든지 환영입니다!
+            <span>NoonsongLAB</span>에 관한 <span>PR & Issue</span>는 언제든지 환영입니다!
             <a href='https://github.com/seohyun0120/random-noonsong'>
               Github
             </a>
@@ -42,7 +42,7 @@ export default function About() {
           <h3>
             눈송템 공구를 해보셨던 총대 학우분들, 눈송이 짤을 그려주시는 숨겨진 학우분들을 찾습니다! <br />
             <span> sarah5734@sm.ac.kr </span>으로 이메일 보내주세요. <br />
-            눈송팩토리에 다양한 눈송이들이 들어오는 것을 보고싶어요!
+            눈송랩실에 다양한 눈송이들이 들어오는 것을 보고싶어요!
           </h3>
         </HelpDescription>
       </HelpContainer>
@@ -79,7 +79,7 @@ const Description = styled.div`
   line-height: 1.5;
 
   span {
-    color: ${({ theme }) => theme.primaryOrange};
+    color: ${({ theme }) => theme.nsLabGold};
     font-weight: 700;
   }
 
@@ -176,11 +176,11 @@ const HelpDescription = styled.div`
   a {
     margin: 0 .2rem;
     text-decoration: none;
-    color: ${({ theme }) => theme.primaryGreen};
+    color: ${({ theme }) => theme.nsLabBlue};
   }
 
   span {
-    color: ${({ theme }) => theme.primaryGreen};
+    color: ${({ theme }) => theme.nsLabBlue};
     font-weight: 600;
   }
 
