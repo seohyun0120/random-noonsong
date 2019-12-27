@@ -28,7 +28,7 @@ const ButtonBox = (props: IResultProps) => {
       })
       .then((dataUrl: string) => {
         const link = document.createElement('a')
-        link.download = 'myNoonSong.png'
+        link.download = `ns_lab_${props.personalNickName}`
         link.href = dataUrl
         link.click()
       })
@@ -45,9 +45,12 @@ const ButtonBox = (props: IResultProps) => {
             />
           </PictureContainer>
           <DetailContainer>
-            <Info personalColor={props.personalColor}>
-              <h2>{props.personalNickName}</h2> 님의 고유한 색깔은 <h3>{props.personalColor}</h3> 입니다.
-            </Info>
+            <Text>
+              <Description personalColor={props.personalColor}> Random-Noonsong for NS LAB </Description>
+              <Description personalColor={props.personalColor}> Nickname {props.personalNickName} </Description>
+              <Description personalColor={props.personalColor}> HEX Code <span>{props.personalColor}</span> </Description>
+              <Description personalColor={props.personalColor}> Sookmyung, Seoul KR </Description>
+            </Text>
             <DownloadButton
               onClick={() => downloadImage('random-noonsong')}
             >
@@ -55,10 +58,7 @@ const ButtonBox = (props: IResultProps) => {
             </DownloadButton>
           </DetailContainer>
         </ResultContainer>
-        :
-        <>
-          <Description>자신만의 닉네임을 입력하고 이모티콘을 골라보세요!</Description>
-        </>
+        : null
       }
     </>
   )
@@ -76,69 +76,62 @@ const ResultContainer = styled.div`
   }
 `
 
-const PictureContainer = styled.div`
-  width: 100%;
-`
+const PictureContainer = styled.div``
 
 const DetailContainer = styled.div`
-  display: inline-block;
+  display: block;
   text-align: left;
   width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
 `
 
 interface IColorProps {
   personalColor: string
 }
 
-const Info = styled.div<IColorProps>`
-  font-size: 1.25rem;
-  font-weight: 400;
+const Text = styled.div`
+  text-align: left;
+`
 
-  h2 {
-    display: inline;
-    font-size: 1.325rem;
-    font-weight: 600;
-  }
+const Description = styled.div<IColorProps>`
+  color: ${({ theme }) => theme.nsLabBlack};
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: .25rem 0 0 2.75rem;
 
-  h3 {
-    display: inline;
+  span {
     color: ${(props) => props.personalColor};
   }
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
     font-size: 13px;
-    padding: .5rem 0 0 0;
-
-    h2 {
-      font-size: 14px;
-    }
+    margin: 0;
   }
 `
 
 const DownloadButton = styled.button`
   appearance: none;
-  background-color: ${({ theme }) => theme.nsLabGray};
+  background-color: ${({ theme }) => theme.nsLabGold};
   color: ${({ theme }) => theme.nsLabWhite};
   cursor: pointer;
   border: 0;
   border-radius: .25rem;
   outline: none;
   width: 8rem;
-  height: 2rem;
+  height: 3rem;
   font-size: 1.25rem;
-  margin: .5rem 0 0 0; 
+  margin: .5rem 0 0 2.75rem;
+
   @media (max-width: ${({ theme }) => theme.mobile}) {
+    height: 4rem;
     width: 4rem;
     font-size: 13px;
-  }
-`
-
-const Description = styled.div`
-  font-size: 1.225rem;
-  font-weight: 500;
-
-  @media (max-width: ${({ theme }) => theme.mobile}) {
-    font-size: 13px;
+    margin: 0 0 0 .5rem;
   }
 `
 

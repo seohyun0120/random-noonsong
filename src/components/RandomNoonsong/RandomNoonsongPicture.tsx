@@ -39,7 +39,7 @@ const PictureBox = (props: IPictureProps) => {
             native={true}
             emoji={props.personalEmoji[0]}
             set='apple'
-            size={38}
+            size={33}
             sheetSize={64}
           />
         </EmojiBox>
@@ -85,6 +85,8 @@ const PictureContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 100%;
 `
 
 const NoonsongContainer = styled.div`
@@ -119,6 +121,10 @@ const EmojiBox = styled.div`
   width: 55px;
   height: 55px;
 
+  span {
+    margin: .575rem .35rem;
+  }
+
   @media (max-width: ${({ theme }) => theme.mobile}) {
     width: 38px;
     height: 38px;
@@ -133,8 +139,8 @@ const Picture = styled.img`
 
 const OuterPicture = styled.div<IColorProps>`
   background: ${(props) => props.personalColor};
-  width: 55px;
-  height: 55px;
+  width: 54px;
+  height: 54px;
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
     width: 38px;

@@ -2,8 +2,10 @@ import 'emoji-mart/css/emoji-mart.css'
 import React, { useState } from 'react'
 import Result from './RandomNoonsongResult'
 import styled, { css } from 'styled-components'
-import { stringToColor, customizedEmojiData } from '../../utils'
+import { stringToColor } from '../../utils'
 import { Emoji, BaseEmoji, Picker } from 'emoji-mart'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faExclamation, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const Main = () => {
   const [inputValue, setNameValue] = useState('')
@@ -16,6 +18,13 @@ const Main = () => {
     setNameValue(inputValue)
     setEmojiValue(inputEmoji)
     setIsPersonalReady(inputValue != '' && inputEmoji.length > 0)
+  }
+
+  const onClickResetButton = () => {
+    setConvertedColor(stringToColor(inputValue))
+    setNameValue('')
+    setEmojiValue([])
+    setIsPersonalReady(false)
   }
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +45,10 @@ const Main = () => {
         <InputBox
           type='string'
           maxLength={10}
+          value={inputValue}
+          placeholder='닉네임을 적어주세요'
           onChange={(e) => onChangeInput(e)}
+          disabled={isPersonalReady}
         />
         <SelectedEmoji>
           {inputEmoji.length > 0 ?
@@ -48,23 +60,28 @@ const Main = () => {
                 sheetSize={64}
               />
             </>
-            : null}
+            : <PlaceHolderText>이모티콘을 고르세요</PlaceHolderText>}
         </SelectedEmoji>
+      </InputContainer>
+      <InputContainer>
         <ConvertButton
           disabled={inputValue == '' || inputEmoji.length == 0}
           onClick={onClickConvertButton}
           isConvertAvailable={inputValue != '' && inputEmoji.length > 0}
         >
+          <FontAwesomeIcon icon={faCheck} style={{ marginRight: '1rem' }} />
           변환
         </ConvertButton>
+        <ResetButton
+          onClick={onClickResetButton}
+        >
+          <FontAwesomeIcon icon={faTimes} style={{ marginRight: '1rem' }} />
+          다시 만들기
+        </ResetButton>
       </InputContainer>
       <EmojiContainer>
-        {customizedEmojiData.map((key) => (
+        {isPersonalReady ? null :
           <Picker
-            <Emoji
-              onClick={(e) => onClickEmoji(e)}
-              key={key.id}
-              emoji={key.colons}
             set='apple'
             emojiSize={24}
             perLine={27}
@@ -74,7 +91,6 @@ const Main = () => {
             showSkinTones={false}
           />
         }
-        ))}
       </EmojiContainer>
       <OutputContainer>
         <Result
@@ -99,7 +115,7 @@ const Container = styled.div`
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: .5rem 0;
 `
 
 const InputBox = styled.input`
@@ -112,7 +128,7 @@ const InputBox = styled.input`
   outline: none;
   font-size: 1.225rem;
   background-color: rgba(0, 0, 0, .1);
-  color: ${({ theme }) => theme.primaryBlack};
+  color: ${({ theme }) => theme.nsLabBlack};
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
     font-size: 15px;
@@ -122,13 +138,25 @@ const InputBox = styled.input`
 const SelectedEmoji = styled.div`
   border-radius: .25rem;
   background-color: rgba(0, 0, 0, .1);
-  margin-right: 0.25em;
+  margin-left: 0.25em;
   height: 2.5rem;
-  width: 5rem;
+  width: 50%;
   text-align: center;
 
   span {
     margin-top: .175rem;
+  }
+`
+
+const PlaceHolderText = styled.div`
+  color: ${({ theme }) => theme.nsLabGray};
+  font-size: 1.125rem;
+  margin-top: .75rem;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    display: flex;
+    font-size: 11px;
+    margin: .875rem 0 0 .375rem;
   }
 `
 
@@ -138,41 +166,51 @@ interface IColorProps {
 
 const ConvertButton = styled.button<IColorProps>`
   appearance: none;
-  background-color: ${({ theme }) => theme.primaryGray};
-  color: ${({ theme }) => theme.primaryWhite};
-  cursor: pointer;
-  border: 0;
+  background-color: ${({ theme }) => theme.nsLabWhite};
+  border: 2px solid ${({ theme }) => theme.nsLabBlue};
   border-radius: .25rem;
+  color: ${({ theme }) => theme.nsLabBlue};
+  cursor: pointer;
   font-size: 1.125rem;
-  width: 5rem;
+  margin-right: 0.25em;
+  width: 100%;
   height: 2.5rem;
   outline: none;
   ${(props) => props.isConvertAvailable && css`
-    background-color: ${({ theme }) => theme.nsLabGold};
+    background-color: ${({ theme }) => theme.nsLabBlue};
+    color: ${({ theme }) => theme.nsLabWhite};
+    font-weight: 600;
   `}
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
     font-size: 15px;
-    width: 4rem;
+  }
+`
+
+const ResetButton = styled.button`
+  appearance: none;
+  background-color: ${({ theme }) => theme.nsLabWhite};
+  border: 2px solid ${({ theme }) => theme.nsLabGold};
+  border-radius: .25rem;
+  color: ${({ theme }) => theme.nsLabGold};
+  cursor: pointer;
+  font-size: 1.125rem;
+  width: 100%;
+  height: 2.5rem;
+  margin-left: 0.25em;
+  outline: none;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    font-size: 15px;
   }
 `
 
 const EmojiContainer = styled.div`
-  height: 2.5rem;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: space-between;
   overflow-y: scroll;
-`
-
-const EmojiBox = styled.div`
-  border: 0;
-  height: 2rem;
-
-  button {
-    cursor: pointer;
-    outline: none;
-  }
 `
 
 const OutputContainer = styled.div`
