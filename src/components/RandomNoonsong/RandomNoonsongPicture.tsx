@@ -81,12 +81,13 @@ interface IColorProps {
 }
 
 const PictureContainer = styled.div`
-  background: ${({ theme }) => theme.nsLabWhite};
-  display: flex;
+  background-color: ${({ theme }) => theme.nsLabWhite};
+  display: inline-block;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: .2rem;
 `
 
 const NoonsongContainer = styled.div`
@@ -121,10 +122,6 @@ const EmojiBox = styled.div`
   width: 55px;
   height: 55px;
 
-  span {
-    margin: .575rem .35rem;
-  }
-
   @media (max-width: ${({ theme }) => theme.mobile}) {
     width: 38px;
     height: 38px;
@@ -138,7 +135,7 @@ const Picture = styled.img`
 `
 
 const OuterPicture = styled.div<IColorProps>`
-  background: ${(props) => props.personalColor};
+  background-color: ${(props) => props.personalColor};
   width: 54px;
   height: 54px;
 

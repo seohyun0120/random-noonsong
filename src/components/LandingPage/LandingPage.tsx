@@ -85,7 +85,7 @@ const NSContainer = styled.div`
 `
 
 const OuterLogo = styled.div<IColorProps>`
-  background: ${(props) => props.personalColor};
+  background-color: ${(props) => props.personalColor};
   width: 250px;
   height: 250px;
   margin: 0 .25rem;
@@ -104,7 +104,6 @@ const Logo = styled.img`
 const Text = styled.div`
   display: flex;
   justify-content: center;
-  font-family: '리디바탕';
 
   span {
     display: flex;
@@ -165,7 +164,6 @@ const ToButton = styled.button<IColorProps>`
 const Description = styled.div`
   display: flex;
   justify-content: center;
-  font-family: '리디바탕';
 
   span {
     font-size: 1.5rem;

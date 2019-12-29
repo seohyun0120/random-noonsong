@@ -42,7 +42,7 @@ export default function About() {
         </SubTitle>
         <SubDescription>
           <h2>v1.0</h2>
-          <h3>December 28, 2019</h3>
+          <h3>December 29, 2019</h3>
           <h4> 🎉 랜덤눈송이(RandomNoonsong) 출시</h4>
         </SubDescription>
       </ReleaseInfoContainer>
@@ -67,7 +67,6 @@ const Title = styled.div`
   display: inline;
   font-size: 3.125rem;
   font-weight: 700;
-  font-family: '리디바탕';
 
   @media (max-width: 900px) {
     font-size: 24px;

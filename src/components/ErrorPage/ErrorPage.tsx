@@ -37,7 +37,6 @@ const Container = styled.div`
 `
 
 const TextContainer = styled.div`
-  font-family: '리디바탕';
   background-color: ${({ theme }) => theme.nsLabWhite};
 `
 
