@@ -8,7 +8,9 @@
   "scripts": {
     "prebuild": "rm -rf dist && rm -rf .cache",
     "start": "parcel ./src/index.html",
-    "build": "node .parcer.js"
+    "build": "node .parcer.js",
+    "publish": "aws s3 sync ./dist s3://noonsonglab.com",
+    "deploy": "yarn build && yarn run publish"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -18,7 +20,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
-    "@kfonts/ridi-batang": "^0.0.1",
     "@types/dom-to-image": "^2.6.0",
     "@types/emoji-mart": "^2.11.0",
     "@types/react": "^16.9.3",
@@ -31,7 +32,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react-app": "^9.1.0",
     "dom-to-image": "^2.6.0",
-    "emoji-mart": "^2.11.1",
+    "emoji-mart": "^2.11.2",
     "parcel-bundler": "^1.12.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
