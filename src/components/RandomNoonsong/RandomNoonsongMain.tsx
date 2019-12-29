@@ -89,7 +89,7 @@ const Main = () => {
             onSelect={(e) => onClickEmoji(e)}
             showPreview={false}
             showSkinTones={false}
-          />
+            include={['people','nature','foods','activity','places','objects','symbols','flags','custom']}/>
         }
       </EmojiContainer>
       <OutputContainer>
