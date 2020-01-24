@@ -51,7 +51,14 @@ export class NSProfileForm extends React.Component<{}, IFormState> {
           />
         )
       case 2:
-        return <Question2 />
+        return (
+          <Question2
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        )
       default:
         return (<NSProfileIntro nextStep={this.nextStep} />)
     }
