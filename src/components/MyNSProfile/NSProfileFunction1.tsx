@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { ButtonContainer, NextButton, BackButton } from './style'
 
 interface IProps {
   values: {
@@ -129,41 +130,4 @@ const ValidateText = styled.div`
     font-size: 1rem;
     margin: .5rem 0 0 0;
   }
-`
-
-const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem 8rem;
-
-  @media (max-width: ${({ theme }) => theme.mobile}) {
-    padding: 2rem;
-  }
-`
-
-const NextButton = styled.button`
-  appearance: none;
-  background-color: ${({ theme }) => theme.nsLabWhite};
-  border: 0;
-  cursor: pointer;
-  padding: 0;
-  font-weight: 700;
-  font-size: 1.5rem;
-  align-items: right;
-  outline: none;
-`
-
-const BackButton = styled.button`
-  appearance: none;
-  background-color: ${({ theme }) => theme.nsLabWhite};
-  border: 0;
-  cursor: pointer;
-  padding: 0;
-  font-weight: 700;
-  font-size: 1.5rem;
-  align-items: left;
-  outline: none;
 `
