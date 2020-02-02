@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-
+import { function2Checkbox } from './checkbox'
 interface IProps {
   values: {
-    nickname: string
+    function2: number
   }
   handleChange: any
   nextStep: () => void
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 interface IState {
-  checkedItems: Map<string, string>
+  selectedItem: number[]
 }
 
 export default class Quesiton2 extends React.Component<IProps, IState> {
@@ -22,51 +22,7 @@ export default class Quesiton2 extends React.Component<IProps, IState> {
   }
 
   state: IState = {
-    checkedItems: new Map()
-  }
-
-  checkbox = [
-    {
-      name: '데자와',
-      key: 'checkbox1',
-      label: 'tejeva',
-    },
-    {
-      name: '마돈나',
-      key: 'checkbox2',
-      label: 'madona',
-    },
-    {
-      name: '로즈커피',
-      key: 'checkbox3',
-      label: 'rose coffee',
-    },
-    {
-      name: '본솔',
-      key: 'checkbox4',
-      label: 'bonsol',
-    },
-    {
-      name: '스타벅스',
-      key: 'checkbox5',
-      label: 'starbucks',
-    }
-  ]
-
-  saveAndContinue = (e: any) => {
-    e.preventDefault()
-    this.props.nextStep()
-  }
-
-  back = (e: any) => {
-    e.preventDefault()
-    this.props.prevStep()
-  }
-
-  handleChange = (e: any) => {
-    const item = e.target.name
-    const isChecked = e.target.checked
-    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }))
+    selectedItem: [],
   }
 
   render() {
@@ -78,14 +34,13 @@ export default class Quesiton2 extends React.Component<IProps, IState> {
             <h2>자주 마시는 음료는?</h2>
           </Title>
           <Selection>
-            {this.checkbox.map((item, i) => (
-              <CheckBoxLabel key={item.key}>
-                <CheckBox
-                  name={item.name}
-                  checked={this.state.checkedItems.get(item.name) ? true : false}
-                  onChange={this.handleChange}
-                />
-                {item.name}
+            {function2Checkbox.map((item, id) => (
+              <CheckBoxLabel key={item.id}>
+                <SelectButton
+                  onClick={this.onSelectButtonClick(item.id)}
+                >
+                  {item.name}
+                </SelectButton>
               </CheckBoxLabel>
             ))}
           </Selection>
@@ -106,6 +61,21 @@ export default class Quesiton2 extends React.Component<IProps, IState> {
         </ButtonContainer>
       </>
     )
+  }
+
+  saveAndContinue = (e: any) => {
+    e.preventDefault()
+    this.props.handleChange(this.state.selectedItem[0])
+    this.props.nextStep()
+  }
+
+  back = (e: any) => {
+    e.preventDefault()
+    this.props.prevStep()
+  }
+
+  onSelectButtonClick = (item: number) => () => {
+    this.setState({ selectedItem: [item] })
   }
 }
 
@@ -151,9 +121,17 @@ const CheckBoxLabel = styled.div`
   margin: 1rem 0;
 `
 
-const CheckBox = styled.input.attrs({
-  type: 'checkbox'
-})`
+const SelectButton = styled.div`
+  appearance: none;
+  border: 2px solid;
+  border-radius: .25rem;
+  color: red;
+  cursor: pointer;
+  font-size: 1.125rem;
+  width: 100%;
+  height: 2.5rem;
+  margin-left: 0.25em;
+  outline: none;
 `
 
 const Selection = styled.div`
