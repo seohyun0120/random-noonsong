@@ -1,0 +1,176 @@
+import React from 'react'
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { function4Checkbox } from './checkbox'
+interface IProps {
+  values: {
+    function4: number
+  }
+  handleChange: any
+  nextStep: () => void
+  prevStep: () => void
+}
+
+interface IState {
+  selectedItem: number[]
+}
+
+export default class Quesiton4 extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props)
+  }
+
+  state: IState = {
+    selectedItem: [],
+  }
+
+  render() {
+    return (
+      <>
+        <Container>
+          <Title>
+            <h1>question 4.</h1>
+            <h2>주로 사용하는 필기용 디바이스를 선택한다.</h2>
+          </Title>
+          <Selection>
+            {function4Checkbox.map((item, id) => (
+              <CheckBoxLabel key={item.id}>
+                <SelectButton
+                  onClick={this.onSelectButtonClick(item.id)}
+                >
+                  {item.name}
+                </SelectButton>
+              </CheckBoxLabel>
+            ))}
+          </Selection>
+        </Container>
+        <ButtonContainer>
+          <BackButton
+            onClick={this.back}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '1rem' }} />
+            back
+          </BackButton>
+          <NextButton
+            onClick={this.saveAndContinue}
+          >
+            next
+          <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: '1rem' }} />
+          </NextButton>
+        </ButtonContainer>
+      </>
+    )
+  }
+
+  saveAndContinue = (e: any) => {
+    e.preventDefault()
+    this.props.handleChange(this.state.selectedItem[0])
+    this.props.nextStep()
+  }
+
+  back = (e: any) => {
+    e.preventDefault()
+    this.props.prevStep()
+  }
+
+  onSelectButtonClick = (item: number) => () => {
+    this.setState({ selectedItem: [item] })
+  }
+}
+
+const Container = styled.div`
+  position: relative;
+  display: inline-block;
+  max-width: 1020px;
+  padding: 1rem 5rem;
+  text-align: left;
+  font-weight: 700;
+  width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    padding: 1rem 2rem;
+  }
+`
+
+const Title = styled.div`
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.75rem;
+    margin: 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.625rem;
+      margin: 0;
+    }
+  }
+`
+
+const CheckBoxLabel = styled.div`
+  font-size: 1.5rem;
+  display: block;
+  margin: 1rem 0;
+`
+
+const SelectButton = styled.div`
+  appearance: none;
+  border: 2px solid;
+  border-radius: .25rem;
+  color: red;
+  cursor: pointer;
+  font-size: 1.125rem;
+  width: 100%;
+  height: 2.5rem;
+  margin-left: 0.25em;
+  outline: none;
+`
+
+const Selection = styled.div`
+  display: block;
+`
+
+const ButtonContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 8rem;
+
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    padding: 2rem;
+  }
+`
+
+const NextButton = styled.button`
+  appearance: none;
+  background-color: ${({ theme }) => theme.nsLabWhite};
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 700;
+  font-size: 1.5rem;
+  align-items: right;
+  outline: none;
+`
+
+const BackButton = styled.button`
+  appearance: none;
+  background-color: ${({ theme }) => theme.nsLabWhite};
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 700;
+  font-size: 1.5rem;
+  align-items: left;
+  outline: none;
+`
